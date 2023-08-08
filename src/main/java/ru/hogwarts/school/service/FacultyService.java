@@ -1,52 +1,45 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.exceptions.DataNotFoundException;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
-    private final Map<Long, Faculty> faculties = new HashMap<>();
-    private Long currentId = 0L;
+    private FacultyRepository facultyRepository;
+
+    @Autowired
+    public FacultyService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
 
     public Faculty getFacultyById(Long id) {
-        return faculties.get(id);
+        return facultyRepository.findById(id).get();
     }
 
     public Collection<Faculty> getAllFaculties() {
-        return faculties.values();
+        return facultyRepository.findAll();
     }
 
     public List<Faculty> getFacultiesByColor(String color) {
-        return faculties.values().stream()
+        return facultyRepository.findAll().stream()
                 .filter(f -> f.getColor().equalsIgnoreCase(color))
                 .collect(Collectors.toList());
     }
 
     public Faculty createFaculty(Faculty faculty) {
-        faculty.setId(++currentId);
-        faculties.put(faculty.getId(), faculty);
-        return faculty;
+        return facultyRepository.save(faculty);
     }
 
-    public Faculty editFaculty(Long id, Faculty faculty) {
-        if (!faculties.containsKey(id)) {
-            throw new DataNotFoundException();
-        }
-        Faculty editedFaculty = faculties.get(id);
-        editedFaculty.setName(faculty.getName());
-        editedFaculty.setColor(faculty.getColor());
-        return editedFaculty;
+    public Faculty editFaculty(Faculty faculty) {
+        return facultyRepository.save(faculty);
     }
     public void deleteFaculty(Long id) {
-        if (faculties.remove(id) == null) {
-            throw new DataNotFoundException();
-        }
+        facultyRepository.deleteById(id);
     }
 }

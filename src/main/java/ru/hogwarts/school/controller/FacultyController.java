@@ -35,9 +35,9 @@ public class FacultyController {
         return facultyService.createFaculty(faculty);
     }
 
-    @PutMapping("/{id}")
-    public Faculty editStudent(@PathVariable("id") Long id, @RequestBody Faculty faculty) {
-        return facultyService.editFaculty(id, faculty);
+    @PutMapping
+    public Faculty editStudent(@RequestBody Faculty faculty) {
+        return facultyService.editFaculty(faculty);
     }
 
     @DeleteMapping("/{id}")
