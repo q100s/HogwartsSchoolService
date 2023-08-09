@@ -2,7 +2,6 @@ package ru.hogwarts.school.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.exceptions.DataNotFoundException;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
@@ -11,10 +10,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
-
-    private StudentRepository studentRepository;
-
     @Autowired
+    private final StudentRepository studentRepository;
+
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
@@ -29,7 +27,7 @@ public class StudentService {
 
     public Collection<Student> getStudentsByAge(int age) {
         return studentRepository.findAll().stream()
-                .filter(s->s.getAge() == age)
+                .filter(s -> s.getAge() == age)
                 .collect(Collectors.toList());
     }
 
@@ -37,9 +35,13 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student editStudent(Student student) {
-        return studentRepository.save(student);
+    public Student editStudent(Long id, Student student) {
+        Student editedStudent = studentRepository.findById(id).get();
+        editedStudent.setName(student.getName());
+        editedStudent.setAge(student.getAge());
+        return studentRepository.save(editedStudent);
     }
+
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
     }
