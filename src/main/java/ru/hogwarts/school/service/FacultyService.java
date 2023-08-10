@@ -2,14 +2,12 @@ package ru.hogwarts.school.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.exceptions.DataNotFoundException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
@@ -27,6 +25,7 @@ public class FacultyService {
     public Collection<Faculty> getAllFaculties() {
         return facultyRepository.findAll();
     }
+
     public List<Faculty> getFacultiesByName(String name) {
         return facultyRepository.findAll().stream()
                 .filter(faculty -> faculty.getName().equalsIgnoreCase(name))
@@ -38,6 +37,7 @@ public class FacultyService {
                 .filter(f -> f.getColor().equalsIgnoreCase(color))
                 .toList();
     }
+
     public Collection<Student> getStudentsByFaculty(Long id) {
         return getFacultyById(id).getStudents();
     }
@@ -52,6 +52,7 @@ public class FacultyService {
         editedFaculty.setColor(faculty.getColor());
         return facultyRepository.save(editedFaculty);
     }
+
     public void deleteFaculty(Long id) {
         facultyRepository.deleteById(id);
     }

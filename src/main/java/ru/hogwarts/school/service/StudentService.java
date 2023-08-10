@@ -21,6 +21,7 @@ public class StudentService {
     public Student getStudentById(Long id) {
         return studentRepository.findById(id).get();
     }
+
     public Collection<Student> getStudentsByAgePeriod(int min, int max) {
         return studentRepository.findByAgeBetween(min, max);
     }
@@ -34,6 +35,7 @@ public class StudentService {
                 .filter(s -> s.getAge() == age)
                 .collect(Collectors.toList());
     }
+
     public Faculty getStudentsFaculty(Long id) {
         return getStudentById(id).getFaculty();
     }
@@ -52,6 +54,7 @@ public class StudentService {
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
     }
+
     public Collection<Student> findByAgeBetween(int max, int min) {
         return studentRepository.findByAgeBetween(max, min);
     }
