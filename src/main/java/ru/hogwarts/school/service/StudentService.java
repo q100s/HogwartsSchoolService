@@ -36,8 +36,8 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-    public Faculty getStudentsFaculty(Long id) {
-        return getStudentById(id).getFaculty();
+    public String getStudentsFaculty(Long id) {
+        return getStudentById(id).getFaculty().getName();
     }
 
     public Student createStudent(Student student) {

@@ -6,6 +6,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,8 +39,13 @@ public class FacultyService {
                 .toList();
     }
 
-    public Collection<Student> getStudentsByFaculty(Long id) {
-        return getFacultyById(id).getStudents();
+    public List<String> getStudentsByFaculty(Long id) {
+        List<Student> students = getFacultyById(id).getStudents().stream().toList();
+        List<String> studentsNames = new ArrayList<>();
+        for (int i = 0; i < students.size(); i++) {
+            studentsNames.add(students.get(i).getName());
+        }
+        return studentsNames;
     }
 
     public Faculty createFaculty(Faculty faculty) {
