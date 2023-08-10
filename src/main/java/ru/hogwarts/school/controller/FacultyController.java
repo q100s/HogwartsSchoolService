@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyService;
@@ -11,8 +12,8 @@ import java.util.Collection;
 public class FacultyController {
     private final FacultyService facultyService;
 
-    public FacultyController(FacultyService service) {
-        this.facultyService = service;
+    public FacultyController(FacultyService facultyService) {
+        this.facultyService = facultyService;
     }
 
     @GetMapping
