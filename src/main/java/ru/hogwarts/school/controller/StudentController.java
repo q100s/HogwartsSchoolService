@@ -34,10 +34,10 @@ public class StudentController {
     @GetMapping("/sorted")
     public Collection<Student> getStudentsByAgePeriod(@RequestParam("min") Integer min,
                                                       @RequestParam("max") Integer max) {
-        return studentService.getStudentsByAgePeriod(min, max);
+        return studentService.findByAgeBetween(min, max);
     }
 
-    @GetMapping("/faculty/{id}")
+    @GetMapping("/{id}/faculty")
     public String getStudentsFaculty(@PathVariable("id") Long id) {
         return studentService.getStudentsFaculty(id);
     }
