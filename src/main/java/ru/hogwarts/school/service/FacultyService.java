@@ -7,9 +7,10 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class FacultyService {
@@ -21,25 +22,28 @@ public class FacultyService {
     }
 
     public Faculty getFacultyById(Long id) {
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElseThrow(DataNotFoundException::new);
     }
 
-    public Collection<Faculty> getAllFaculties() {
+    public List<Faculty> getAllFaculties() {
         return facultyRepository.findAll();
     }
+
     public List<Faculty> getFacultiesByName(String name) {
-        return facultyRepository.findAll().stream()
-                .filter(faculty -> faculty.getName().equalsIgnoreCase(name))
-                .toList();
+        return facultyRepository.findAllByNameIgnoreCase(name);
     }
 
     public List<Faculty> getFacultiesByColor(String color) {
-        return facultyRepository.findAll().stream()
-                .filter(f -> f.getColor().equalsIgnoreCase(color))
-                .toList();
+        return facultyRepository.findAllByColorIgnoreCase(color);
     }
-    public Collection<Student> getStudentsByFaculty(Long id) {
-        return getFacultyById(id).getStudents();
+
+    public List<String> getStudentsByFaculty(Long id) {
+        List<Student> students = getFacultyById(id).getStudents().stream().toList();
+        List<String> studentsNames = new ArrayList<>();
+        for (int i = 0; i < students.size(); i++) {
+            studentsNames.add(students.get(i).getName());
+        }
+        return studentsNames;
     }
 
     public Faculty createFaculty(Faculty faculty) {
@@ -47,12 +51,14 @@ public class FacultyService {
     }
 
     public Faculty editFaculty(Long id, Faculty faculty) {
-        Faculty editedFaculty = facultyRepository.findById(id).get();
-        editedFaculty.setName(faculty.getName());
-        editedFaculty.setColor(faculty.getColor());
+        Faculty editedFaculty = facultyRepository.findById(id).orElseThrow(DataNotFoundException::new);
+        Optional.ofNullable(faculty.getName()).ifPresent(editedFaculty::setName);
+        Optional.ofNullable(faculty.getColor()).ifPresent(editedFaculty::setColor);
         return facultyRepository.save(editedFaculty);
     }
+
     public void deleteFaculty(Long id) {
-        facultyRepository.deleteById(id);
+        Faculty deletedFaculty = facultyRepository.findById(id).orElseThrow(DataNotFoundException::new);
+        facultyRepository.delete(deletedFaculty);
     }
 }
