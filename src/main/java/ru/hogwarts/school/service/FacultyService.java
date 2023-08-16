@@ -36,14 +36,8 @@ public class FacultyService {
     public List<Faculty> getFacultiesByColor(String color) {
         return facultyRepository.findAllByColorIgnoreCase(color);
     }
-
-    public List<String> getStudentsByFaculty(Long id) {
-        List<Student> students = getFacultyById(id).getStudents().stream().toList();
-        List<String> studentsNames = new ArrayList<>();
-        for (int i = 0; i < students.size(); i++) {
-            studentsNames.add(students.get(i).getName());
-        }
-        return studentsNames;
+    public Faculty getByStudentId(Long studentId) {
+        return facultyRepository.findByStudent_Id(studentId).orElseThrow(DataNotFoundException::new);
     }
 
     public Faculty createFaculty(Faculty faculty) {

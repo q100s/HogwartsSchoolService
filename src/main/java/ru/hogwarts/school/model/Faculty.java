@@ -10,13 +10,13 @@ import java.util.Objects;
 @Entity
 public class Faculty {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
     private String name;
     private String color;
     @OneToMany(mappedBy = "faculty")
     @JsonIgnore
-    private List<Student> students;
+    List<Student> students;
 
     public Faculty() {
     }
@@ -25,6 +25,14 @@ public class Faculty {
         this.id = id;
         this.name = name;
         this.color = color;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -43,16 +51,12 @@ public class Faculty {
         this.color = color;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public List<Student> getStudents() {
         return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 
     @Override
@@ -60,20 +64,13 @@ public class Faculty {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Faculty faculty = (Faculty) o;
-        return Objects.equals(name, faculty.name) && Objects.equals(color, faculty.color) && Objects.equals(id, faculty.id);
+        return Objects.equals(id, faculty.id) && Objects.equals(name, faculty.name) && Objects.equals(color, faculty.color)
+                && Objects.equals(students, faculty.students);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, color, id);
+        return Objects.hash(id, name, color, students);
     }
 
-    @Override
-    public String toString() {
-        return "Faculty{" +
-                "name: " + name + '\'' +
-                ", color: " + color + '\'' +
-                ", id: " + id +
-                '}';
-    }
 }

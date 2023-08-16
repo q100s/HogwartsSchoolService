@@ -37,11 +37,6 @@ public class StudentController {
         return studentService.findByAgeBetween(min, max);
     }
 
-    @GetMapping("/{id}/faculty")
-    public String getStudentsFaculty(@PathVariable("id") Long id) {
-        return studentService.getStudentsFaculty(id);
-    }
-
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
         return studentService.createStudent(student);

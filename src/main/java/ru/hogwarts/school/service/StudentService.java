@@ -32,10 +32,6 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public String getStudentsFaculty(Long id) {
-        return getStudentById(id).getFaculty().getName();
-    }
-
     public Student createStudent(Student student) {
         return studentRepository.save(student);
     }
