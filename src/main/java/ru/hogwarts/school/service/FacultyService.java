@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exceptions.DataNotFoundException;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,14 +33,8 @@ public class FacultyService {
     public List<Faculty> getFacultiesByColor(String color) {
         return facultyRepository.findAllByColorIgnoreCase(color);
     }
-
-    public List<String> getStudentsByFaculty(Long id) {
-        List<Student> students = getFacultyById(id).getStudents().stream().toList();
-        List<String> studentsNames = new ArrayList<>();
-        for (int i = 0; i < students.size(); i++) {
-            studentsNames.add(students.get(i).getName());
-        }
-        return studentsNames;
+    public Faculty getByStudentId(Long studentId) {
+        return facultyRepository.findByStudents_Id(studentId).orElseThrow(DataNotFoundException::new);
     }
 
     public Faculty createFaculty(Faculty faculty) {

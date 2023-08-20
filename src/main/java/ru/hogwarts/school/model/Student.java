@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
     private String name;
     private Integer age;
@@ -24,6 +24,14 @@ public class Student {
         this.id = id;
         this.name = name;
         this.age = age;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -42,16 +50,12 @@ public class Student {
         this.age = age;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Faculty getFaculty() {
         return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
     @Override
@@ -59,20 +63,21 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return Objects.equals(age, student.age) && Objects.equals(name, student.name) && Objects.equals(id, student.id);
+        return Objects.equals(id, student.id) && Objects.equals(name, student.name) && Objects.equals(age, student.age) && Objects.equals(faculty, student.faculty);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, age, id);
+        return Objects.hash(id, name, age, faculty);
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "name: " + name + '\'' +
-                ", age: " + age +
-                ", id: " + id +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", faculty=" + faculty +
                 '}';
     }
 }

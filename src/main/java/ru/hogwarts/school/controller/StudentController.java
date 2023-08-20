@@ -1,10 +1,12 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ru.hogwarts.school.model.Faculty;
+import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
+import java.io.IOException;
 import java.util.Collection;
 
 @RestController
@@ -36,10 +38,9 @@ public class StudentController {
                                                       @RequestParam("max") Integer max) {
         return studentService.findByAgeBetween(min, max);
     }
-
-    @GetMapping("/{id}/faculty")
-    public String getStudentsFaculty(@PathVariable("id") Long id) {
-        return studentService.getStudentsFaculty(id);
+    @GetMapping("/by-faculty")
+    public Collection<Student> filtered (@RequestParam Long facultyId) {
+        return studentService.getByFacultyId(facultyId);
     }
 
     @PostMapping
