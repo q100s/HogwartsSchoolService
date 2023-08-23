@@ -28,11 +28,11 @@ public class FacultyController {
     }
 
     @GetMapping("/{id}")
-    public Faculty getFacultyInfo(@PathVariable Long id) {
+    public Faculty getFacultyById(@PathVariable Long id) {
         return facultyService.getFacultyById(id);
     }
     @GetMapping("/by-student")
-    public Faculty getByStudent(@RequestParam Long studentId) {
+    public Faculty getFacultyByStudent(@RequestParam Long studentId) {
         return facultyService.getByStudentId(studentId);
     }
 
