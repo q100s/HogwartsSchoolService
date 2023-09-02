@@ -11,10 +11,7 @@ import ru.hogwarts.school.service.AvatarService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.List;
 
 @RestController
 @RequestMapping("/avatar")
@@ -50,6 +47,11 @@ public class AvatarController {
         return ResponseEntity.status(200).headers(headers).body(data);
     }
 
+    @GetMapping
+    public List<Avatar> getAllAvatars(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize) {
+        return avatarService.getAll(pageNumber, pageSize);
+    }
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Long> save(@RequestParam Long studentId, @RequestBody MultipartFile multipartFile) {
         try {
@@ -60,5 +62,4 @@ public class AvatarController {
             return ResponseEntity.badRequest().build();
         }
     }
-
-   }
+}
