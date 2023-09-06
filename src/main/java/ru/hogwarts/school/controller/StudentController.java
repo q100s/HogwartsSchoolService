@@ -45,10 +45,12 @@ public class StudentController {
     public int getAmountOfStudents() {
         return studentService.getAmountOfStudents();
     }
+
     @GetMapping("/average-age")
     public double getAverageAgeOfStudents() {
         return studentService.getAverageAgeOfStudents();
     }
+
     @GetMapping("/last-five")
     public Collection<Student> getLastFiveStudents() {
         return studentService.getLastFiveStudents();
