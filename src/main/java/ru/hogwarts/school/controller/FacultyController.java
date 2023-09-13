@@ -31,11 +31,16 @@ public class FacultyController {
     public Faculty getFacultyById(@PathVariable Long id) {
         return facultyService.getFacultyById(id);
     }
+
     @GetMapping("/by-student")
     public Faculty getFacultyByStudent(@RequestParam Long studentId) {
         return facultyService.getByStudentId(studentId);
     }
 
+    @GetMapping("/longestName")
+    public String getTheLongestName() {
+        return facultyService.getTheLongestFacultyName();
+    }
 
 //    @GetMapping("/filtered")
 //    public Collection<Faculty> getFacultiesByColor(@RequestParam("color") String color) {
@@ -55,5 +60,10 @@ public class FacultyController {
     @DeleteMapping("/{id}")
     public void deleteFaculty(@PathVariable("id") Long id) {
         facultyService.deleteFaculty(id);
+    }
+
+    @GetMapping("/task4")
+    public int task4() {
+        return facultyService.task4();
     }
 }
