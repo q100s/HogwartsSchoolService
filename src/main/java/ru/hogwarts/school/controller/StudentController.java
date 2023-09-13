@@ -56,6 +56,12 @@ public class StudentController {
         return studentService.getLastFiveStudents();
     }
 
+    @GetMapping("/startBy/a")
+    public Collection<String> getByA() {
+        return studentService.getByA();
+    }
+
+
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
         return studentService.createStudent(student);
