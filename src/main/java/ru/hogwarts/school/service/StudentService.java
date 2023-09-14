@@ -47,15 +47,6 @@ public class StudentService {
         return studentRepository.findAllByFaculty_Id(facultyId);
     }
 
-    public Collection<String> getByA() {
-        return getAllStudents().stream()
-                .parallel()
-                .map(s -> s.getName().toUpperCase())
-                .filter(s -> StringUtils.startsWithIgnoreCase(s, "a"))
-                .toList();
-
-    }
-
     public int getAmountOfStudents() {
         logger.info("getAmountOfStudents method has been invoked");
         return studentRepository.getAmountOfStudents();
@@ -69,6 +60,15 @@ public class StudentService {
     public Collection<Student> getLastFiveStudents() {
         logger.info("getLastFiveStudents method has been invoked");
         return studentRepository.getLastFiveStudents();
+    }
+
+    public Collection<String> getByA() {
+        return getAllStudents().stream()
+                .parallel()
+                .map(s -> s.getName().toUpperCase())
+                .filter(s -> StringUtils.startsWithIgnoreCase(s, "a"))
+                .toList();
+
     }
 
     public Student createStudent(Student student) {
