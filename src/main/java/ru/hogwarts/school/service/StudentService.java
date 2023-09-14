@@ -63,10 +63,7 @@ public class StudentService {
 
     public double getAverageAgeOfStudents() {
         logger.info("getAverageAgeOfStudents method has been invoked");
-        return getAllStudents().stream()
-                .mapToDouble(Student::getAge)
-                .average()
-                .orElseThrow(DataNotFoundException::new);
+        return studentRepository.getAverageAgeOfStudents();
     }
 
     public Collection<Student> getLastFiveStudents() {
