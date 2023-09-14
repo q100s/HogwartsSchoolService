@@ -37,6 +37,11 @@ public class FacultyController {
         return facultyService.getByStudentId(studentId);
     }
 
+    @GetMapping("/longestName")
+    public String getTheLongestName() {
+        return facultyService.getTheLongestFacultyName();
+    }
+
 //    @GetMapping("/filtered")
 //    public Collection<Faculty> getFacultiesByColor(@RequestParam("color") String color) {
 //        return facultyService.getFacultiesByColor(color);
@@ -57,4 +62,8 @@ public class FacultyController {
         facultyService.deleteFaculty(id);
     }
 
+    @GetMapping("/task4")
+    public int task4() {
+        return facultyService.task4();
+    }
 }
