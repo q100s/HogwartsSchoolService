@@ -73,6 +73,36 @@ public class StudentService {
                 .toList();
     }
 
+    public void getSixNames() {
+        System.out.println(studentRepository.findAll().get(0).getName());
+        System.out.println(studentRepository.findAll().get(1).getName());
+
+        new Thread(() -> {
+            System.out.println(studentRepository.findAll().get(2).getName());
+            System.out.println(studentRepository.findAll().get(3).getName());
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(studentRepository.findAll().get(4).getName());
+            System.out.println(studentRepository.findAll().get(5).getName());
+        }).start();
+    }
+
+    public void getSixNamesSynchronized() {
+        printName(0);
+        printName(1);
+
+        new Thread(() -> {
+            printName(2);
+            printName(3);
+        }).start();
+
+        new Thread(() -> {
+            printName(4);
+            printName(5);
+        }).start();
+    }
+
     public Student createStudent(Student student) {
         logger.info("createStudent method has been invoked");
         return studentRepository.save(student);
@@ -98,5 +128,9 @@ public class StudentService {
     public Collection<Student> findByAgeBetween(int max, int min) {
         logger.info("findByAgeBetween method has been invoked");
         return studentRepository.findByAgeBetween(max, min);
+    }
+
+    private synchronized void printName(int index) {
+        System.out.println(studentRepository.findAll().get(index).getName());
     }
 }
