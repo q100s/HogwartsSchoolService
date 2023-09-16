@@ -10,11 +10,13 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class StudentService {
     Logger logger = LoggerFactory.getLogger(StudentService.class);
+    public int count = 0;
     @Autowired
     private final StudentRepository studentRepository;
 
@@ -74,6 +76,7 @@ public class StudentService {
     }
 
     public void getSixNames() {
+        int count = 0;
         System.out.println(studentRepository.findAll().get(0).getName());
         System.out.println(studentRepository.findAll().get(1).getName());
 
@@ -89,17 +92,18 @@ public class StudentService {
     }
 
     public void getSixNamesSynchronized() {
-        printName(0);
-        printName(1);
+        logger.info("getSixNamesSynchronized method has been invoked");
+        printName();
+        printName();
 
         new Thread(() -> {
-            printName(2);
-            printName(3);
+            printName();
+            printName();
         }).start();
 
         new Thread(() -> {
-            printName(4);
-            printName(5);
+            printName();
+            printName();
         }).start();
     }
 
@@ -130,7 +134,9 @@ public class StudentService {
         return studentRepository.findByAgeBetween(max, min);
     }
 
-    private synchronized void printName(int index) {
-        System.out.println(studentRepository.findAll().get(index).getName());
+    private synchronized void printName() {
+        List<Student> students = studentRepository.findAll();
+        System.out.println(students.get(count).getName());
+        count++;
     }
 }
