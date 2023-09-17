@@ -61,6 +61,16 @@ public class StudentController {
         return studentService.getByA();
     }
 
+    @GetMapping("/task-4-6-1")
+    public void getSixNames() {
+        studentService.getSixNames();
+    }
+
+    @GetMapping("/task-4-6-2")
+    public void getSixNamesSynchronized() {
+        studentService.getSixNamesSynchronized();
+    }
+
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
         return studentService.createStudent(student);
