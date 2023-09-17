@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 public class StudentService {
     Logger logger = LoggerFactory.getLogger(StudentService.class);
-    public int count = 0;
+    private int count = 0;
     @Autowired
     private final StudentRepository studentRepository;
 
@@ -76,34 +76,33 @@ public class StudentService {
     }
 
     public void getSixNames() {
-        int count = 0;
-        System.out.println(studentRepository.findAll().get(0).getName());
-        System.out.println(studentRepository.findAll().get(1).getName());
+        logger.info(studentRepository.findAll().get(0).getName());
+        logger.info(studentRepository.findAll().get(1).getName());
 
         new Thread(() -> {
-            System.out.println(studentRepository.findAll().get(2).getName());
-            System.out.println(studentRepository.findAll().get(3).getName());
+            logger.info(studentRepository.findAll().get(2).getName());
+            logger.info(studentRepository.findAll().get(3).getName());
         }).start();
 
         new Thread(() -> {
-            System.out.println(studentRepository.findAll().get(4).getName());
-            System.out.println(studentRepository.findAll().get(5).getName());
+            logger.info(studentRepository.findAll().get(4).getName());
+            logger.info(studentRepository.findAll().get(5).getName());
         }).start();
     }
 
     public void getSixNamesSynchronized() {
-        logger.info("getSixNamesSynchronized method has been invoked");
-        printName();
-        printName();
+        List<Student> students = studentRepository.findAll();
+        printName(students);
+        printName(students);
 
         new Thread(() -> {
-            printName();
-            printName();
+            printName(students);
+            printName(students);
         }).start();
 
         new Thread(() -> {
-            printName();
-            printName();
+            printName(students);
+            printName(students);
         }).start();
     }
 
@@ -134,9 +133,8 @@ public class StudentService {
         return studentRepository.findByAgeBetween(max, min);
     }
 
-    private synchronized void printName() {
-        List<Student> students = studentRepository.findAll();
-        System.out.println(students.get(count).getName());
+    private synchronized void printName(List<Student> students) {
+        logger.info(students.get(count % students.size()).getName());
         count++;
     }
 }
