@@ -61,9 +61,4 @@ public class FacultyController {
     public void deleteFaculty(@PathVariable("id") Long id) {
         facultyService.deleteFaculty(id);
     }
-
-    @GetMapping("/task4")
-    public int task4() {
-        return facultyService.task4();
-    }
 }

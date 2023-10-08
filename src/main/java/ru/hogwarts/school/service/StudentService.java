@@ -67,7 +67,7 @@ public class StudentService {
         return studentRepository.getLastFiveStudents();
     }
 
-    public Collection<String> getByA() {
+    public Collection<String> getAllStartsWithA() {
         return getAllStudents().stream()
                 .parallel()
                 .map(s -> s.getName().toUpperCase())

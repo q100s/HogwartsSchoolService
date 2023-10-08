@@ -58,7 +58,7 @@ public class StudentController {
 
     @GetMapping("/startBy/a")
     public Collection<String> getByA() {
-        return studentService.getByA();
+        return studentService.getAllStartsWithA();
     }
 
     @GetMapping("/task-4-6-1")
